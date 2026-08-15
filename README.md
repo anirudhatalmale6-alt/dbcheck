@@ -18,3 +18,15 @@ A single read-only PHP diagnostic for legacy PHP applications that fail with
   configured host plus `localhost` and `127.0.0.1`
 
 It changes nothing. Passwords are never printed - only their length.
+
+## v2
+
+v2 no longer guesses config file names. It walks the site folder (up to three
+levels, skipping asset directories), finds whichever file actually opens the
+database connection, and follows one level of `include`/`require` to wherever the
+settings really live. It also reads credentials hard-coded directly into a
+`mysql_connect()` / `mysqli_connect()` call, and picks up the database name from a
+separate `select_db()` call.
+
+Opening the page without the key now prints the correct full URL instead of a bare
+"forbidden".
